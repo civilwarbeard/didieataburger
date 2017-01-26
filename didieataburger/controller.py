@@ -14,9 +14,20 @@ def not_logged_in():
 def login():
 	return render_template("login.html")
 
-@app.route("/create")
+@app.route("/create", methods=["GET"])
 def create():
 	return render_template("create.html")
+
+@app.route("/create", methods=["POST"])
+def create_post():
+	eater = Eater(
+		email = request.form["email"],
+		password = request.form["password"],
+		)
+
+	session.add(eater)
+	session.commit()
+	return redirect(url_for("eat"))
 
 @app.route("/eat", methods=["GET"])
 #loginrequired
