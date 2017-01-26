@@ -21,7 +21,7 @@ def create():
 @app.route("/create", methods=["POST"])
 def create_post():
 	eater = Eater(
-		email = request.form["email"],
+		username = request.form["username"],
 		password = request.form["password"],
 		)
 
