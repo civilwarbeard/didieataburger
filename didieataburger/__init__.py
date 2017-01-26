@@ -8,3 +8,4 @@ app.config.from_object(config_path)
 
 from . import controller
 from . import login
+from . import filters
