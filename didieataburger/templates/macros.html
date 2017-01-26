@@ -1,5 +1,5 @@
 {% macro render_entry(burger) %}
-<div class="row">
-    <li> {{ burger.time_eaten }}
+<div>
+    <ul> {{ burger.time_eaten | dateformat("%l:%M %a %b %e" ) }} </ul>
 </div>
 {% endmacro %}
