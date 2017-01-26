@@ -17,3 +17,25 @@ def login():
 @app.route("/create")
 def create():
 	return render_template("create.html")
+
+@app.route("/eat", methods=["GET"])
+#loginrequired
+def eat():
+	return render_template("eatburger.html")
+
+@app.route("/eat", methods=["POST"])
+def eat_post():
+	#enter burger query update
+	#login required
+	#redirect to url_for("ate")
+	pass
+
+@app.route("/ate", methods=["GET"])
+#login required
+def ate():
+	return render_template("ate_burger.html")
+
+@app.route("/ate", methods=["POST"])
+def ate_post():
+	pass
+	
