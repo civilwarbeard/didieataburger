@@ -6,7 +6,8 @@
 <form role="form" method="POST">
 	<div class="topleft"><img src="/static/images/burger_menu_white.png"></div>
     <div class="center"><img src="/static/images/cow128.png">
-    	<p>You ate so many burgers!</p>
+        <p>Hi {{ current_user.first_name}}!</p>
+    	<p>You ate {{ burger_count }} burgers!</p>
     	<p> 
     		{% for burger in burgers %}
 			{{ macros.render_entry(burger) }}
