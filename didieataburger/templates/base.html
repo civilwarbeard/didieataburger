@@ -10,10 +10,15 @@
   </head>
   <body>
   {% if current_user.is_authenticated %}
-    <div class="topleft"><img src="/static/images/burger_menu_white.png"></div>
+    <div class="topleft">
+      <div>
+        <img src="/static/images/burger_menu_white.png">
+      </div>
+      </div>
   {% endif %}
 
       {% block content %}{% endblock %}
         
   </body>
 </html>
+
