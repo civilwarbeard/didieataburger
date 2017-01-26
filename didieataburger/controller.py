@@ -10,9 +10,20 @@ from .database import session, Eater, Burger
 def not_logged_in():
 	return render_template("landing.html")
 
-@app.route("/login")
+@app.route("/login", methods=["GET"])
 def login():
 	return render_template("login.html")
+
+@app.route("/login", methods=["POST"])
+def login_post():
+	username = request.form["username"]
+	password = request.form["password"]
+	eater = session.query(Eater).filter_by(username=username).first()
+	if not eater or not eater.password:
+		return redirect(url_for("login"))
+
+	login_user(eater)
+	return redirect(request.args.get('next') or url_for("eat"))
 
 @app.route("/create", methods=["GET"])
 def create():
