@@ -61,9 +61,14 @@ def eat_post():
 def ate():
 	burger_eater = current_user.id
 	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
+
+	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
+	burgers = burgers.order_by(Burger.time_eaten.desc())
 	if burger_count > 1:
-		return render_template("ate_many.html")
-	return render_template("ate_burger.html")
+		return render_template("ate_many.html",
+			burgers=burgers)
+	return render_template("ate_burger.html",
+		burgers=burgers)
 
 @app.route("/ate", methods=["POST"])
 def ate_post():
