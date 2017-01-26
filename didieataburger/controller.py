@@ -4,8 +4,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import app
 from .database import session, Eater, Burger
 
-
-
 @app.route("/")
 def not_logged_in():
 	return render_template("landing.html")
@@ -66,11 +64,15 @@ def ate():
 	burgers = burgers.order_by(Burger.time_eaten.desc())
 	if burger_count > 1:
 		return render_template("ate_many.html",
-			burgers=burgers)
+			burgers=burgers,
+			burger_count=burger_count,
+			burger_eater=burger_eater)
 	return render_template("ate_burger.html",
-		burgers=burgers)
+		burgers=burgers,
+		burger_eater=burger_eater)
 
 @app.route("/ate", methods=["POST"])
+@login_required
 def ate_post():
 	burger_eater = current_user.id
 
@@ -85,3 +87,27 @@ def logout():
 	logout_user()
 	return redirect(url_for("not_logged_in"))
 	
+@app.route("/settings", methods=["GET"])
+@login_required
+def settings():
+	eater=session.query(Eater).filter(current_user.id==Eater.id)
+	eater=eater.one()
+
+	return render_template("settings.html",
+		eater=eater)
+
+@app.route("/settings", methods=["POST"])
+@login_required
+def settings_update():
+	eater=session.query(Eater).filter(current_user.id==Eater.id).update(\
+		{"first_name": request.form["first_name"],\
+		"last_name": request.form["last_name"],\
+		"username": request.form["username"],
+		"password": request.form["password"]})
+
+	session.commit()
+
+	return redirect(url_for("ate"))
+
+
+
