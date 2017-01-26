@@ -15,10 +15,10 @@ class Eater(Base):
 	__tablename__ = "eater"
 
 	id = Column(Integer, primary_key=True)
-	first_name = Column(String, nullable=False)
-	last_name = Column(String, nullable=False)
+	first_name = Column(String, default="None")
+	last_name = Column(String, default="None")
 	username = Column(String, nullable=False)
-	password = Column(String(128)) 
+	password = Column(String(128), nullable=False) 
 
 	burgers = relationship("Burger", backref="burger_eater")
 
