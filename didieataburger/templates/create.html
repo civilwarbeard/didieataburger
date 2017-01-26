@@ -2,12 +2,15 @@
 
 {% block content %}
 <form role="form" method="POST">
-<body>
+
 	<div class="center">
 		<p>Create New Burgereater</p>
-			<p>Username<form><input type="text" name="username" /></form></p>
-			<p>Password<form><input type="password" name="password" /></form></p>
-			<p>Re-type Password<form><input type="password" name="password"</p>
-	</div>
+			<form>
+			<p>Username<input type="text" name="username" id="username" /></p>
+			<p>Password<input type="password" name="password" id="password"/></p>
+			<p><input type="submit" value="Submit"></p>
 
+	</div>
+</form>
 {% endblock %}
+
