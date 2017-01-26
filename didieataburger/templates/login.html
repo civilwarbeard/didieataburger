@@ -5,8 +5,9 @@
 	<body>
 		<div class="center">
 			<p>Login to pigout</p>
-			<p>Username<form><input type="text" name="username" /></form></p>
-			<p>Password<form><input type="password" name="password" /></form></p>
+			<p>Username<input type="text" name="username" id="username" /></p>
+			<p>Password<input type="password" name="password" id="password" /></p>
+			<p><input type="submit" value="Submit"></p>
 			<p>...or <a href="{{ url_for('create') }}">New Account</a></p>
 		</div>
 	</body>
