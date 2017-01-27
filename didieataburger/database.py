@@ -11,14 +11,15 @@ Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 
-class Eater(Base):
+class Eater(Base, UserMixin):
 	__tablename__ = "eater"
 
 	id = Column(Integer, primary_key=True)
-	first_name = Column(String, nullable=False)
-	last_name = Column(String, nullable=False)
+	first_name = Column(String, default="None")
+	last_name = Column(String, default="None")
 	username = Column(String, nullable=False)
-	password = Column(String(128)) 
+	password = Column(String(128), nullable=False)
+	is_active = Column(Boolean, default=True)
 
 	burgers = relationship("Burger", backref="burger_eater")
 

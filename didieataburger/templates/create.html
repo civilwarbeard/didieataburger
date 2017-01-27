@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form method="POST">
 
-<body>
 	<div class="center">
 		<p>Create New Burgereater</p>
-		<p>Username:</p>
-		<p>Passwoerd:</p>
-		<p>Re-type Password</p>
-	</div>
+			<form>
+			<p>Username<input id="username" type="text" name="username" /></p>
+			<p>Password<input id="password" type="password" name="password" /></p>
+			<p><input type="submit" value="Submit"></p>
 
+	</div>
+</form>
 {% endblock %}
+

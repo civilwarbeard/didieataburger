@@ -9,7 +9,10 @@
     <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
   </head>
   <body>
-         
+  {% if current_user.is_authenticated %}
+    <div class="topleft"><img src="/static/images/burger_menu_white.png"></div>
+  {% endif %}
+
       {% block content %}{% endblock %}
         
   </body>
