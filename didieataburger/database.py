@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
-import datetime
+from datetime import datetime
 
 from . import app
 from flask_login import UserMixin
@@ -11,4 +11,23 @@ Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
 
-#Put my classes here burgers and users....
+class Eater(Base):
+	__tablename__ = "eater"
+
+	id = Column(Integer, primary_key=True)
+	first_name = Column(String, nullable=False)
+	last_name = Column(String, nullable=False)
+	username = Column(String, nullable=False)
+	password = Column(String(128)) 
+
+	burgers = relationship("Burger", backref="burger_eater")
+
+class Burger(Base):
+	__tablename__ = "burger"
+
+	id = Column(Integer, primary_key=True)
+	time_eaten = Column(DateTime, default=datetime.utcnow)
+
+	eater = Column(Integer, ForeignKey("eater.id"), nullable=False)
+
+Base.metadata.create_all(engine)
