@@ -17,14 +17,14 @@ def run():
 
 @manager.command
 def seed():
-	nick = Eater(first_name="Nick", last_name="Janquart", username="random1", password="test")
-	gemma = Eater(first_name="Gemma", last_name="Petrie", username="pammeg",password="test")
-	jer = Eater(first_name="Jer", last_name="Janquart", username="numbnuts", password="test")
-	matt = Eater(first_name="Matt", last_name="Obrien", username="matto", password="test")
-	rc = Eater(first_name="Ryan", last_name="Cowan", username="rycow", password="test")
-	peter = Eater(first_name="Peter", last_name="Compernolle", username="pecomp", password="test")
-	karl = Eater(first_name="Karl", last_name="Kell", username="karlk", password="test")
-	eric = Eater(first_name="Eric", last_name="Sanders", username="chico", password="test")
+	nick = Eater(first_name="Nick", last_name="Janquart", username="civilwarbeard", password = generate_password_hash("test"))
+	gemma = Eater(first_name="Gemma", last_name="Petrie", username="pammeg", password = generate_password_hash("test"))
+	jer = Eater(first_name="Jer", last_name="Janquart", username="numbnuts", password = generate_password_hash("test"))
+	matt = Eater(first_name="Matt", last_name="Obrien", username="matto", password = generate_password_hash("test"))
+	rc = Eater(first_name="Ryan", last_name="Cowan", username="rycow", password = generate_password_hash("test"))
+	peter = Eater(first_name="Peter", last_name="Compernolle", username="pecomp", password = generate_password_hash("test"))
+	karl = Eater(first_name="Karl", last_name="Kell", username="karlk", password = generate_password_hash("test"))
+	eric = Eater(first_name="Eric", last_name="Sanders", username="chico", password = generate_password_hash("test"))
 
 	session.add_all([nick, gemma, jer, matt, rc, peter, karl, eric])
 	session.commit()
