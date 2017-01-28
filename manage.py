@@ -12,7 +12,7 @@ manager = Manager(app)
 
 @manager.command
 def run():
-	port = int(os.environ.get('PORT', 2424))
+	port = int(os.environ.get('PORT', 33507))
 	app.run(host='0.0.0.0', port=port)
 
 @manager.command
