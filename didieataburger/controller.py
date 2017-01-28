@@ -21,7 +21,7 @@ def login_post():
 		return redirect(url_for("login_get"))
 
 	login_user(eater)
-	return redirect(url_for("eat"))
+	return redirect(request.args.get('next') or url_for("eat"))
 
 @app.route("/create", methods=["GET"])
 def create():
