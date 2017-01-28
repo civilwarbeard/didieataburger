@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST">
+
+	<div class="center">
+		<p>Settings</p>
+			<form>
+			<p>First Name<input id="first_name" type="text" name="first_name"
+			placeholder="{{ eater.first_name}}" /></p>
+			<p>Last Name<input id="last_name" type="text" name="last_name"
+			placeholder="{{ eater.last_name }}" /> </p>
+			<p>Username<input id="username" type="text" name="username" 
+			placeholder="{{ eater.username }}" /></p>
+			<p>Password<input id="password" type="password" name="password" /></p>
+			<p><input type="submit" value="Submit"></p>
+
+	</div>
+</form>
+{% endblock %}

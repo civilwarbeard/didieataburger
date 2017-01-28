@@ -10,15 +10,18 @@
   </head>
   <body>
   {% if current_user.is_authenticated %}
-    <div class="topleft">
-      <div>
-        <img src="/static/images/burger_menu_white.png">
-      </div>
-      </div>
+    <div class="topleft"><img src="/static/images/burger_menu_white.png">
+      <a class="link" href="{{ url_for('ate') }}">Home</a>
+      <a class="link" href="{{ url_for('settings') }}">Settings</a>
+      <a class="link" href="{{ url_for('logout') }}"> Logout</a>
+    </div>
+  </div>
+  </div>
   {% endif %}
 
       {% block content %}{% endblock %}
         
   </body>
 </html>
+
 
