@@ -30,13 +30,16 @@ def create():
 @app.route("/create", methods=["POST"])
 def create_post():
 	eater = Eater(
+		first_name = request.form["first_name"],
+		last_name = request.form["last_name"],
 		username = request.form["username"],
-		password = request.form["password"],
+		password = generate_password_hash(request.form["password"]),
 		)
 
 	session.add(eater)
 	session.commit()
-	return redirect(url_for("eat"))
+	login_user(eater)
+	return redirect(request.args.get('next') or url_for("eat"))
 
 @app.route("/eat", methods=["GET"])
 @login_required
@@ -99,6 +102,8 @@ def settings():
 @app.route("/settings", methods=["POST"])
 @login_required
 def settings_update():
+	eater=session.query(Eater).filter(current_user.id==Eater.id)
+
 	eater=session.query(Eater).filter(current_user.id==Eater.id).update(\
 		{"first_name": request.form["first_name"],\
 		"last_name": request.form["last_name"],\
