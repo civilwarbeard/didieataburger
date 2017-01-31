@@ -50,7 +50,7 @@ def eat():
 @login_required
 def eat_post():
 	#enter burger query update
-	burger_eater = current_user
+	burger_eater = current_user.id
 
 	session.add(Burger(eater=burger_eater))
 
@@ -60,7 +60,7 @@ def eat_post():
 @app.route("/ate", methods=["GET"])
 @login_required
 def ate():
-	burger_eater = current_user
+	burger_eater = current_user.id
 	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
 	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
@@ -77,7 +77,7 @@ def ate():
 @app.route("/ate", methods=["POST"])
 @login_required
 def ate_post():
-	burger_eater = current_user
+	burger_eater = current_user.id
 
 	session.add(Burger(eater=burger_eater))
 
@@ -93,7 +93,7 @@ def logout():
 @app.route("/settings", methods=["GET"])
 @login_required
 def settings():
-	eater=session.query(Eater).filter(current_user==Eater.id)
+	eater=session.query(Eater).filter(current_user.id==Eater.id)
 	eater=eater.one()
 
 	return render_template("settings.html",
@@ -102,9 +102,9 @@ def settings():
 @app.route("/settings", methods=["POST"])
 @login_required
 def settings_update():
-	eater=session.query(Eater).filter(current_user==Eater.id)
+	eater=session.query(Eater).filter(current_user.id==Eater.id)
 
-	eater=session.query(Eater).filter(current_user==Eater.id).update(\
+	eater=session.query(Eater).filter(current_user.id==Eater.id).update(\
 		{"first_name": request.form["first_name"],\
 		"last_name": request.form["last_name"],\
 		"username": request.form["username"],
