@@ -10,3 +10,6 @@ from . import controller
 from . import login
 from . import filters
 
+if __name__ == "__main__":
+	app.run(host=environ['IP'],
+		port=int(environ['PORT']))
