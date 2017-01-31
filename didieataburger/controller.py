@@ -93,7 +93,7 @@ def logout():
 @app.route("/settings", methods=["GET"])
 @login_required
 def settings():
-	eater=session.query(Eater).filter(current_user.id==Eater.id)
+	eater=session.query(Eater).filter(current_user==Eater.id)
 	eater=eater.one()
 
 	return render_template("settings.html",
