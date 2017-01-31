@@ -42,15 +42,15 @@ def create_post():
 	return redirect(request.args.get('next') or url_for("eat"))
 
 @app.route("/eat", methods=["GET"])
-#@login_required
+@login_required
 def eat():
 	return render_template("eatburger.html")
 
 @app.route("/eat", methods=["POST"])
-#@login_required
+@login_required
 def eat_post():
 	#enter burger query update
-	burger_eater = current_user.id
+	burger_eater = current_user
 
 	session.add(Burger(eater=burger_eater))
 
@@ -58,9 +58,9 @@ def eat_post():
 	return redirect(url_for("ate"))
 
 @app.route("/ate", methods=["GET"])
-#@login_required
+@login_required
 def ate():
-	burger_eater = current_user.id
+	burger_eater = current_user
 	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
 	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
@@ -75,9 +75,9 @@ def ate():
 		burger_eater=burger_eater)
 
 @app.route("/ate", methods=["POST"])
-#@login_required
+@login_required
 def ate_post():
-	burger_eater = current_user.id
+	burger_eater = current_user
 
 	session.add(Burger(eater=burger_eater))
 
@@ -85,13 +85,13 @@ def ate_post():
 	return redirect(url_for("ate"))
 
 @app.route("/logout")
-#@login_required
+@login_required
 def logout():
 	logout_user()
 	return redirect(url_for("not_logged_in"))
 	
 @app.route("/settings", methods=["GET"])
-#@login_required
+@login_required
 def settings():
 	eater=session.query(Eater).filter(current_user.id==Eater.id)
 	eater=eater.one()
@@ -100,11 +100,11 @@ def settings():
 		eater=eater)
 
 @app.route("/settings", methods=["POST"])
-#@login_required
+@login_required
 def settings_update():
-	eater=session.query(Eater).filter(current_user.id==Eater.id)
+	eater=session.query(Eater).filter(current_user==Eater.id)
 
-	eater=session.query(Eater).filter(current_user.id==Eater.id).update(\
+	eater=session.query(Eater).filter(current_user==Eater.id).update(\
 		{"first_name": request.form["first_name"],\
 		"last_name": request.form["last_name"],\
 		"username": request.form["username"],
