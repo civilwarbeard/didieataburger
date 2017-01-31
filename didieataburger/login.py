@@ -1,4 +1,4 @@
-from flask_login import LoginManager, UserMixin
+from flask_login import LoginManager
 
 from . import app
 from .database import session, Eater
