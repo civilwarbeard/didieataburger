@@ -62,9 +62,9 @@ def eat_post():
 @login_required
 def ate():
 	burger_eater = current_user.id
-	burger_count = session.query(Burger).filter(burger_eater=Burger.eater).count()
+	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
-	burgers = session.query(Burger).filter(burger_eater=Burger.eater)
+	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
 	burgers = burgers.order_by(Burger.time_eaten.desc())
 	if burger_count > 1:
 		return render_template("ate_many.html",
@@ -94,7 +94,7 @@ def logout():
 @app.route("/settings", methods=["GET"])
 @login_required
 def settings():
-	eater=session.query(Eater).filter(current_user.id=Eater.id)
+	eater=session.query(Eater).filter(current_user.id==Eater.id)
 	eater=eater.one()
 
 	return render_template("settings.html",
@@ -103,9 +103,9 @@ def settings():
 @app.route("/settings", methods=["POST"])
 @login_required
 def settings_update():
-	eater=session.query(Eater).filter(current_user.id=Eater.id)
+	eater=session.query(Eater).filter(current_user.id==Eater.id)
 
-	eater=session.query(Eater).filter(current_user.id=Eater.id).update(\
+	eater=session.query(Eater).filter(current_user.id==Eater.id).update(\
 		{"first_name": request.form["first_name"],\
 		"last_name": request.form["last_name"],\
 		"username": request.form["username"],
