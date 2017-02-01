@@ -50,7 +50,7 @@ def eat():
 @login_required
 def eat_post():
 	#enter burger query update
-	burger_eater = current_user
+	burger_eater = current_user.id
 
 	session.add(Burger(eater=burger_eater))
 
