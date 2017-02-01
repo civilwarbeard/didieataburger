@@ -16,7 +16,8 @@ def login_get():
 def login_post():
 	username = request.form["username"]
 	password = request.form["password"]
-	user = session.query(Eater).filter_by(username=username).first()
+	user = session.query(Eater).filter_by(username==username).first()
+
 	if not user or not check_password_hash(user.password, password):
 		return redirect(url_for("login_get"))
 
@@ -52,7 +53,7 @@ def eat_post():
 	#enter burger query update
 	burger_eater = current_user.id
 
-	session.add(Burger(eater=burger_eater))
+	session.add(Burger(eater==burger_eater))
 
 	session.commit()
 	return redirect(url_for("ate"))
@@ -79,7 +80,7 @@ def ate():
 def ate_post():
 	burger_eater = current_user.id
 
-	session.add(Burger(eater=burger_eater))
+	session.add(Burger(eater==burger_eater))
 
 	session.commit()
 	return redirect(url_for("ate"))
