@@ -53,7 +53,7 @@ def eat_post():
 	#enter burger query update
 	burger_eater = current_user.id
 
-	session.add(Burger(eater==burger_eater))
+	session.add(Burger(eater=burger_eater))
 
 	session.commit()
 	return redirect(url_for("ate"))
