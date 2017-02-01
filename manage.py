@@ -13,7 +13,7 @@ manager = Manager(app)
 @manager.command
 def run():
 	port = int(os.environ.get('PORT', 29865))
-	app.run(host='0.0.0.0', port=port)
+	app.run(port=33507)
 
 @manager.command
 def seed():
