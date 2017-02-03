@@ -11,9 +11,9 @@ from werkzeug.security import generate_password_hash
 manager = Manager(app)
 
 @manager.command
-def runn():
-	port = int(os.environ.get('PORT', 29865))
-	app.run(host='0.0.0.0', port=port)
+def run():
+	app.run(host=environ['IP'],
+	port=int(environ['PORT']))
 
 @manager.command
 def seed():
@@ -29,7 +29,8 @@ def seed():
 	session.add_all([nick, gemma, jer, matt, rc, peter, karl, eric])
 	session.commit()
 
+    
 if __name__ == "__main__":
-	app.run(host=environ['IP'],
-			port=int(environ['PORT']))
+    manager.run()
+
 
