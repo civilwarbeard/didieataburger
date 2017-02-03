@@ -9,8 +9,3 @@ app.config.from_object(config_path)
 from . import controller
 from . import filters
 from . import login
-
-if __name__ == "__main__":
-    #port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-    manager.run()
