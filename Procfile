@@ -1,1 +1,1 @@
-web: gunicorn didieataburger:app --log-file=-
+web: python manage.py --log-file=-
