@@ -11,7 +11,7 @@ from werkzeug.security import generate_password_hash
 manager = Manager(app)
 
 @manager.command
-def run():
+def runn():
 	port = int(os.environ.get('PORT', 29865))
 	app.run(host='0.0.0.0', port=port)
 
