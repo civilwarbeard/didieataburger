@@ -29,7 +29,7 @@ def seed():
 	session.add_all([nick, gemma, jer, matt, rc, peter, karl, eric])
 	session.commit()
 
-    
 if __name__ == "__main__":
-    manager.run()
+	app.run(host=environ['IP'],
+			port=int(environ['PORT']))
 
