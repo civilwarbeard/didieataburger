@@ -115,5 +115,3 @@ def settings_update():
 
 	return redirect(url_for("ate"))
 
-
-
