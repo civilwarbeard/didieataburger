@@ -1,1 +1,1 @@
-web: gunicorn app:controller --log-file=-
+web: gunicorn didieataburger:app --log-file=-
