@@ -20,7 +20,7 @@ def login_post():
 
 	if not user or not check_password_hash(user.password, password):
 		flash("Incorrect username or password", "danger")
-        return redirect(url_for("login_get"))
+		return redirect(url_for("login_get"))
 
 	login_user(user)
 	return redirect(url_for("eat"))
