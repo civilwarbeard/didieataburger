@@ -1,1 +1,1 @@
-web: gunicorn didieataburger:app --preload
+web: didieataburger:app --preload
