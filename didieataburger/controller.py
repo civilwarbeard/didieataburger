@@ -19,7 +19,6 @@ def login_post():
 	user = session.query(Eater).filter_by(username=username).first()
 
 	if not user or not check_password_hash(user.password, password):
-		flash("Incorrect username or password", "danger")
 		return redirect(url_for("login_get"))
 
 	login_user(user)
