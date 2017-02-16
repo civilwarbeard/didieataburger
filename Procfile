@@ -1,1 +1,1 @@
-web: didieataburger:app --preload
+web: gunicorn didieataburger:app--log-file=-
