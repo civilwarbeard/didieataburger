@@ -6,7 +6,7 @@ from datetime import datetime
 from . import app
 from flask_login import UserMixin
 
-engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI1"])
+engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
 Base = declarative_base()
 Session = sessionmaker(bind=engine)
 session = Session()
