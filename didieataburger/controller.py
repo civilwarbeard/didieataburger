@@ -18,7 +18,7 @@ def login_post():
 	password = request.form["password"]
 	eater = session.query(Eater).filter_by(username=username).first()
 
-	if not eater or not check_password_hash(user.password, password):
+	if not eater or not check_password_hash(eater.password, password):
 		return redirect(url_for("login_get"))
 
 	login_user(eater)
