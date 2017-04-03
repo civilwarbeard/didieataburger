@@ -7,5 +7,5 @@ config_path = os.environ.get("CONFIG_PATH", "didieataburger.config.HerokuConfig"
 app.config.from_object(config_path)
 
 from . import controller
-from . import filters
 from . import login
+from . import filters
