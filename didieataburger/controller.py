@@ -16,12 +16,12 @@ def login_get():
 def login_post():
 	username = request.form["username"]
 	password = request.form["password"]
-	user = session.query(Eater).filter_by(username=username).first()
+	eater = session.query(Eater).filter_by(username=username).first()
 
-	if not user or not check_password_hash(user.password, password):
+	if not eater or not check_password_hash(user.password, password):
 		return redirect(url_for("login_get"))
 
-	login_user(user)
+	login_user(eater)
 	return redirect(url_for("eat"))
 
 @app.route("/create", methods=["GET"])
