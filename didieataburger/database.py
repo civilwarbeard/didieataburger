@@ -12,7 +12,7 @@ session = scoped_session(sessionmaker(autocommit=False,
 							autoflush=False,
 							bind=engine))
 Base = declarative_base()
-Base.query = db_session.query_property()
+Base.query = session.query_property()
 Base.metadata.bind = engine
 
 #Session = sessionmaker(bind=engine)
