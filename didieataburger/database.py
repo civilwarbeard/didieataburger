@@ -8,13 +8,14 @@ from flask_login import UserMixin
 
 engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
 
+Base = declarative_base()
 Base.metadata.bind = engine
 #Session = sessionmaker(bind=engine)
 #session = Session()
 db_session = scoped_session(sessionmaker(autocommit=False,
 							autoflush=False,
 							bind=engine))
-Base = declarative_base()
+
 Base.query = db_session.query_property()
 Base.metadata.create_all(engine)
 
