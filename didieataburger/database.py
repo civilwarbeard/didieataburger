@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, Boolean, ForeignKey
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.orm import sessionmaker, relationship, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 
@@ -7,10 +7,16 @@ from . import app
 from flask_login import UserMixin
 
 engine = create_engine(app.config["SQLALCHEMY_DATABASE_URI"])
-Base = declarative_base()
+
 Base.metadata.bind = engine
-Session = sessionmaker(bind=engine)
-session = Session()
+#Session = sessionmaker(bind=engine)
+#session = Session()
+db_session = scoped_session(sessionmaker(autocommit=False,
+							autoflush=False,
+							bind=engine))
+Base = declarative_base()
+Base.query = db_session.query_property()
+Base.metadata.create_all(engine)
 
 class Eater(Base, UserMixin):
 	__tablename__ = "eater"
@@ -32,4 +38,4 @@ class Burger(Base):
 
 	eater = Column(Integer, ForeignKey("eater.id"), nullable=False)
 
-Base.metadata.create_all(engine)
+#Base.metadata.create_all(engine)
