@@ -10,7 +10,6 @@ from werkzeug.security import generate_password_hash
 
 manager = Manager(app)
 
-"""This runs application when"""
 @manager.command
 def run():
 	port = int(os.environ.get('PORT', 29865))
