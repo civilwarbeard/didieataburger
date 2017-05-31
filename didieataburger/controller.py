@@ -1,8 +1,10 @@
+from datetime import datetime, timedelta
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, UserMixin, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import app
 from .database import session, Eater, Burger
+
 
 @app.route("/")
 def not_logged_in():
@@ -22,6 +24,22 @@ def login_post():
 		return redirect(url_for("login_get"))
 
 	login_user(eater)
+
+	#check login user eat count
+	burger_eater = current_user.id
+	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
+
+	#check time now and time last eaten
+	today = datetime.today()
+	six_days = timedelta(days=6)
+
+	last_date_eaten = session.query(Burger).filter(burger_eater==Burger.eater).order_by(\
+		Burger.time_eaten.desc()).limit(1)
+
+
+	if burger_count > 0 and last_date_eaten > (today - six_days):
+		return redirect(url_for("ate"))
+
 	return redirect(url_for("eat"))
 
 @app.route("/create", methods=["GET"])
