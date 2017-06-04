@@ -48,10 +48,7 @@ def login_post():
 	#convert burger time from tuple
 	last_date_eaten = last_date_eaten[0].time_eaten.strftime("%Y/%M/%d")
 
-	if burger_count == 1:
-		return redirect(url_for("ate"))
-
-	if last_date_eaten < good_to_eat and burger_count > 1:
+	if last_date_eaten < good_to_eat:
 		return redirect(url_for("ate"))
 
 	return redirect(url_for("eat"))
