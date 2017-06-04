@@ -10,9 +10,11 @@ from .database import session, Eater, Burger
 def not_logged_in():
 	return render_template("landing.html")
 
+
 @app.route("/login", methods=["GET"])
 def login_get():
 	return render_template("login.html")
+
 
 @app.route("/login", methods=["POST"])
 def login_post():
@@ -44,13 +46,13 @@ def login_post():
 		Burger.time_eaten.desc()).limit(1)
 
 	#convert burger time from tuple
-	last_date_eaten = last_date_eaten[1].time_eaten.strftime("%Y/%M/%d")
+	last_date_eaten = last_date_eaten[0].time_eaten.strftime("%Y/%M/%d")
 
-	if burger_count > 1:
+	if burger_count == 1:
 		return redirect(url_for("ate"))
 
 	if last_date_eaten < good_to_eat and burger_count > 1:
-		return redirect(url_for("ate_many.html"))
+		return redirect(url_for("ate"))
 
 	return redirect(url_for("eat"))
 
@@ -58,6 +60,7 @@ def login_post():
 @app.route("/create", methods=["GET"])
 def create():
 	return render_template("create.html")
+
 
 @app.route("/create", methods=["POST"])
 def create_post():
@@ -73,10 +76,12 @@ def create_post():
 	login_user(eater)
 	return redirect(url_for("eat"))
 
+
 @app.route("/eat", methods=["GET"])
 @login_required
 def eat():
 	return render_template("eatburger.html")
+
 
 @app.route("/eat", methods=["POST"])
 @login_required
@@ -89,6 +94,7 @@ def eat_post():
 	session.commit()
 	return redirect(url_for("ate"))
 
+
 @app.route("/ate", methods=["GET"])
 @login_required
 def ate():
@@ -97,6 +103,31 @@ def ate():
 
 	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
 	burgers = burgers.order_by(Burger.time_eaten.desc())
+	burger_one = burgers.order_by(Burger.time_eaten.desc())
+
+	#get time right now and time last eaten
+	burger_day = datetime.today()
+	six_days = timedelta(days=6)
+
+	good_to_eat = burger_day - six_days
+
+	#convert datetime for comparison
+	burger_day = burger_day.strftime("%Y/%m/%d")
+	good_to_eat = good_to_eat.strftime("%Y/%M/%d")
+
+	#grab the last time burger was eaten by logged in user
+	last_date_eaten = session.query(Burger).filter(burger_eater==Burger.eater).order_by(\
+		Burger.time_eaten.desc()).limit(1)
+
+	#convert burger time from tuple
+	last_date_eaten = last_date_eaten[0].time_eaten.strftime("%Y/%M/%d")
+
+	if burger_count == 1:
+		return render_template("ate_burger.html",
+			burgers=burgers,
+			burger_one=burger_one,
+			burger_eater=burger_eater)
+
 	if burger_count > 1:
 		return render_template("ate_many.html",
 			burgers=burgers,
@@ -105,6 +136,7 @@ def ate():
 	return render_template("ate_burger.html",
 		burgers=burgers,
 		burger_eater=burger_eater)
+
 
 @app.route("/ate", methods=["POST"])
 @login_required
@@ -116,12 +148,14 @@ def ate_post():
 	session.commit()
 	return redirect(url_for("ate"))
 
+
 @app.route("/logout")
 @login_required
 def logout():
 	logout_user()
 	return redirect(url_for("not_logged_in"))
 	
+
 @app.route("/settings", methods=["GET"])
 @login_required
 def settings():
@@ -130,6 +164,7 @@ def settings():
 
 	return render_template("settings.html",
 		eater=eater)
+
 
 @app.route("/settings", methods=["POST"])
 @login_required
@@ -146,6 +181,3 @@ def settings_update():
 
 	return redirect(url_for("ate"))
 
-if __name__ == '__main__':
-	port = int(os.environ.get('PORT', 5000))
-	app.run(host='0.0.0.0', port=port, debug=True)
