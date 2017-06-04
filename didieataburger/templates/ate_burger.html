@@ -12,14 +12,19 @@
 		</p>
         <p></p>
         <p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/Burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
-        <p>Historical Burgers:</p>
-        <p>
-            {% for burger in burgers %}
-            {{ macros.render_entry(burger) }}
-            {% endfor %}
+
     </div>
 </form>
 
-{% endblock %}
+        {% endblock %}
 
 
+        <!--Inline loop for Historical burgers 
+        {% if historical_burgers_count > 0 %}
+        <p>Historical Burgers:</p>
+        <p>
+            {% for burger in historical_burgers %}
+            {{ macros.render_entry(burger) }}
+            {% endfor %}
+        </p>
+        {% endif %}-->

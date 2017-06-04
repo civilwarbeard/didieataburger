@@ -13,11 +13,11 @@
 			{% endfor %}
 		</p>
         <p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
-        <p>Historical Burgers:</p>
+        {% if historical_burgers_count > 0 %}
         <p>
-            {% for burger in burgers %}
-            {{ macros.render_entry(burger) }}
-            {% endfor %}
+        <a class="link" href="{{ url_for('allburgers') }}">Burger History</a>
+        </p>
+        {% endif %}
     </div>
 </form>
 {% endblock %}
