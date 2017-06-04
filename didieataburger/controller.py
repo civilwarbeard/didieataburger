@@ -109,9 +109,11 @@ def ate():
 	burgers = burgers.order_by(Burger.time_eaten.desc())
 
 	burgers_this_week = session.query(Burger).filter(burger_eater==Burger.eater).\
+		filter(Burger.time_eaten > good_to_eat)
+	burgers_this_week_count = session.query(Burger).filter(burger_eater==Burger.eater).\
 		filter(Burger.time_eaten > good_to_eat).count()
 
-	burger_one = burgers.order_by(Burger.time_eaten.desc())
+	burger_one = burgers.order_by(Burger.time_eaten.desc()).first()
 
 	#convert datetime for comparison
 	burger_day = burger_day.strftime("%Y/%m/%d")
@@ -124,20 +126,24 @@ def ate():
 	#convert burger time from tuple
 	last_date_eaten = last_date_eaten[0].time_eaten.strftime("%Y/%M/%d")
 
-	if burgers_this_week == 1:
+	if burgers_this_week_count == 1:
 		return render_template("ate_burger.html",
 			burgers=burgers,
 			burger_one=burger_one,
 			burger_eater=burger_eater)
 
-	if burgers_this_week > 1:
+	if burgers_this_week_count > 1:
 		return render_template("ate_many.html",
 			burgers=burgers,
 			burger_count=burger_count,
-			burger_eater=burger_eater)
+			burger_eater=burger_eater,
+			burgers_this_week=burgers_this_week,
+			burgers_this_week_count=burgers_this_week_count)
+
 	return render_template("eatburger.html",
 		burgers=burgers,
-		burger_eater=burger_eater)
+		burger_eater=burger_eater,
+		burgers_this_week=burgers_this_week)
 
 
 @app.route("/ate", methods=["POST"])
