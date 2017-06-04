@@ -6,13 +6,18 @@
 <form role="form" method="POST">
     <div class="center"><img src="./static/images/cow128.png">
         <p>Hi {{ current_user.first_name}}!</p>
-    	<p>You ate {{ burger_count }} burgers!</p>
+    	<p>You ate {{ burgers_this_week_count }} burgers this week!</p>
     	<p> 
-    		{% for burger in burgers %}
+    		{% for burger in burgers_this_week %}
 			{{ macros.render_entry(burger) }}
 			{% endfor %}
 		</p>
-    	<p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
+        <p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
+        <p>Historical Burgers:</p>
+        <p>
+            {% for burger in burgers %}
+            {{ macros.render_entry(burger) }}
+            {% endfor %}
     </div>
 </form>
 {% endblock %}

@@ -6,13 +6,17 @@
 <form role="form" method="POST">
     <div class="center"><img src="./static/images/man_who_ate128.png">
         <p>Hi {{ current_user.first_name}}!</p>
-    	<p>You ate a burger!</p>
+    	<p>You ate a burger this week!</p>
     	<p> 
-    		{% for burger in burgers %}
-			{{ macros.render_entry(burger) }}
-			{% endfor %}
+    		{{ burger_one.time_eaten | dateformat("%l:%M %a %b %e" ) }}
 		</p>
-    	<p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/Burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
+        <p></p>
+        <p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/Burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
+        <p>Historical Burgers:</p>
+        <p>
+            {% for burger in burgers %}
+            {{ macros.render_entry(burger) }}
+            {% endfor %}
     </div>
 </form>
 
