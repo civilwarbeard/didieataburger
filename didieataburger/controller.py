@@ -25,22 +25,29 @@ def login_post():
 
 	login_user(eater)
 
-	#check login user eat count
+	#get login user eat count
 	burger_eater = current_user.id
 	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
-	#check time now and time last eaten
-	today = datetime.today()
-	six_days = timedelta(days=6)
+	#get time right now and time last eaten
+	today = datetime.date.today()
+	six_days = datetime.timedelta(days=6)
+
+	good_to_eat = today - six_days
+
+	#convert datetime for comparison
+	today = today.strftime("%Y/%m/%d")
+	good_to_eat = good_to_eat.strftime("%Y/%M/%d")
+
 
 	last_date_eaten = session.query(Burger).filter(burger_eater==Burger.eater).order_by(\
 		Burger.time_eaten.desc()).limit(1)
 
-
-	if burger_count > 0 and last_date_eaten > (today - six_days):
-		return redirect(url_for("ate"))
+	if last_date_eaten < good_to_eat:
+		return redirect(url_for("ate_many.html"))
 
 	return redirect(url_for("eat"))
+
 
 @app.route("/create", methods=["GET"])
 def create():
