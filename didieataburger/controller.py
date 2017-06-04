@@ -18,6 +18,7 @@ def login_get():
 
 @app.route("/login", methods=["POST"])
 def login_post():
+	"""Login and redirect to to either eat or ate templates"""
 	username = request.form["username"]
 	password = request.form["password"]
 	eater = session.query(Eater).filter_by(username=username).first()
@@ -96,6 +97,9 @@ def eat_post():
 @app.route("/ate", methods=["GET"])
 @login_required
 def ate():
+	"""The functions here return values and everything else for ate_burger, 
+	ate_many templates"""
+
 	burger_eater = current_user.id
 	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
@@ -107,6 +111,11 @@ def ate():
 
 	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
 	burgers = burgers.order_by(Burger.time_eaten.desc())
+
+	historical_burgers = session.query(Burger).filter(burger_eater==Burger.eater).\
+		filter(Burger.time_eaten < good_to_eat)
+	historical_burgers_count = session.query(Burger).filter(burger_eater==Burger.eater).\
+		filter(Burger.time_eaten < good_to_eat).count()
 
 	burgers_this_week = session.query(Burger).filter(burger_eater==Burger.eater).\
 		filter(Burger.time_eaten > good_to_eat)
@@ -130,20 +139,26 @@ def ate():
 		return render_template("ate_burger.html",
 			burgers=burgers,
 			burger_one=burger_one,
-			burger_eater=burger_eater)
+			burger_eater=burger_eater,
+			historical_burgers=historical_burgers,
+			historical_burgers_count=historical_burgers_count)
 
 	if burgers_this_week_count > 1:
 		return render_template("ate_many.html",
 			burgers=burgers,
 			burger_count=burger_count,
 			burger_eater=burger_eater,
+			historical_burgers=historical_burgers,
 			burgers_this_week=burgers_this_week,
-			burgers_this_week_count=burgers_this_week_count)
+			burgers_this_week_count=burgers_this_week_count,
+			historical_burgers_count=historical_burgers_count)
 
 	return render_template("eatburger.html",
 		burgers=burgers,
 		burger_eater=burger_eater,
-		burgers_this_week=burgers_this_week)
+		burgers_this_week=burgers_this_week,
+		historical_burgers=historical_burgers,
+		historical_burgers_count=historical_burgers_count)
 
 
 @app.route("/ate", methods=["POST"])
@@ -189,3 +204,13 @@ def settings_update():
 
 	return redirect(url_for("ate"))
 
+@app.route("/allburgers", methods=["GET"])
+@login_required
+def allburgers():
+	"""Burger Log for User"""
+	burger_eater = current_user.id
+	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
+	burgers = burgers.order_by(Burger.time_eaten.desc())
+
+	return render_template("allburgers.html",
+		burgers=burgers)
