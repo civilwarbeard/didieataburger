@@ -30,20 +30,26 @@ def login_post():
 	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
 	#get time right now and time last eaten
-	today = datetime.date.today()
-	six_days = datetime.timedelta(days=6)
+	burger_day = datetime.today()
+	six_days = timedelta(days=6)
 
-	good_to_eat = today - six_days
+	good_to_eat = burger_day - six_days
 
 	#convert datetime for comparison
-	today = today.strftime("%Y/%m/%d")
+	burger_day = burger_day.strftime("%Y/%m/%d")
 	good_to_eat = good_to_eat.strftime("%Y/%M/%d")
 
-
+	#grab the last time burger was eaten by logged in user
 	last_date_eaten = session.query(Burger).filter(burger_eater==Burger.eater).order_by(\
 		Burger.time_eaten.desc()).limit(1)
 
-	if last_date_eaten < good_to_eat:
+	#convert burger time from tuple
+	last_date_eaten = last_date_eaten[1].time_eaten.strftime("%Y/%M/%d")
+
+	if burger_count > 1:
+		return redirect(url_for("ate"))
+
+	if last_date_eaten < good_to_eat and burger_count > 1:
 		return redirect(url_for("ate_many.html"))
 
 	return redirect(url_for("eat"))
