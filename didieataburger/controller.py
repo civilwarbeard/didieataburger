@@ -40,17 +40,21 @@ def login_post():
 
 	#convert datetime for comparison
 	burger_day = burger_day.strftime("%Y/%m/%d")
-	good_to_eat = good_to_eat.strftime("%Y/%M/%d")
+	good_to_eat = good_to_eat.strftime("%Y/%m/%d")
 
 	#grab the last time burger was eaten by logged in user
 	last_date_eaten = session.query(Burger).filter(burger_eater==Burger.eater).order_by(\
 		Burger.time_eaten.desc()).limit(1)
 
 	#convert burger time from tuple
-	last_date_eaten = last_date_eaten[0].time_eaten.strftime("%Y/%M/%d")
+	last_date_eaten = last_date_eaten[0].time_eaten.strftime("%Y/%m/%d")
+
+	burgers_this_week_count = session.query(Burger).filter(burger_eater==Burger.eater).\
+		filter(Burger.time_eaten > good_to_eat).count()
 
 	#check if user ate a burger this week and redirect accordingly
-	if last_date_eaten < good_to_eat:
+	#****add burgers this week from ate route
+	if burgers_this_week_count >= 1:
 		return redirect(url_for("ate"))
 
 	return redirect(url_for("eat"))
@@ -211,6 +215,8 @@ def allburgers():
 	burger_eater = current_user.id
 	burgers = session.query(Burger).filter(burger_eater==Burger.eater)
 	burgers = burgers.order_by(Burger.time_eaten.desc())
+	burger_count = session.query(Burger).filter(burger_eater==Burger.eater).count()
 
 	return render_template("allburgers.html",
-		burgers=burgers)
+		burgers=burgers,
+		burger_count=burger_count)
