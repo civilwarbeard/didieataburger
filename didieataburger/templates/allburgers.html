@@ -3,13 +3,15 @@
 
 {% block content %}
 
-<div class="center"><img src="./static/images/bull.png">
-    <p>{{ current_user.first_name}}'s Total Burger History!</p>
-        <p>
+
+	<div class="center"><div class="big"> <center>{{ burger_count }} !!<center></div>
+		<center><img src="./static/images/bull.png"></center>
+    	<p>{{ current_user.first_name}}'s Total Burger History!</p>
+        	<p>
             {% for burger in burgers %}
             {{ macros.render_entry(burger) }}
             {% endfor %}
-    </p>
+    		</p>
 </div>
 
 
