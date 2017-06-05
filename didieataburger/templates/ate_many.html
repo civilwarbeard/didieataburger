@@ -15,7 +15,7 @@
         <p>Eat another?! &nbsp;&nbsp;<input type="image" src="./static/images/burger128.png" style="width:20px;height:20px;" alt="Submit"></p>
         {% if historical_burgers_count > 0 %}
         <p>
-        <p>Burger History &nbsp;&nbsp;<a href="{{ url_for('allburgers') }}"><img src="./static/images/bull.png" style="width:20px;height:20px;"></a></p>
+        <p><a href="{{ url_for('allburgers') }}"><img src="./static/images/bull.png" style="width:20px;height:20px;"></a>&nbsp;&nbsp;Burger History </p>
         </p>
         {% endif %}
     </div>
